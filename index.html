@@ -317,7 +317,7 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
 .search-heading h3{margin:0;font-size:1.15rem;letter-spacing:-.2px;color:var(--navy-deep)}
 .search-heading p{margin:4px 0 0;color:var(--ink-soft);font-size:.78rem}
 .search-badge{padding:7px 11px;border-radius:999px;background:#edf6ff;color:var(--blue);font-size:.7rem;font-weight:800;letter-spacing:.3px;text-transform:uppercase}
-.search-fields{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr) auto;gap:10px;align-items:end}
+.search-fields{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr) 180px 220px;gap:10px;align-items:end}
 .route-select-wrap{position:relative}
 .route-select-wrap select{
  height:56px;padding:0 42px 0 46px;border:1px solid #d7e2eb;border-radius:14px;background:#fff;
@@ -336,15 +336,15 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
 }
 .swap-btn:hover{transform:rotate(180deg);background:var(--blue);color:#fff}
 .btn-search{
- min-height:56px;padding:0 23px;border:0;border-radius:14px;display:inline-flex;align-items:center;
+ min-height:56px;min-width:220px;padding:0 28px;border:0;border-radius:14px;display:inline-flex;align-items:center;
  justify-content:center;gap:9px;background:var(--navy-deep);color:#fff;font-weight:800;cursor:pointer;
  box-shadow:0 9px 20px rgba(15,39,64,.20);transition:transform .18s,box-shadow .18s,background .18s
 }
 .btn-search:hover{transform:translateY(-1px);background:#102f4c;box-shadow:0 12px 24px rgba(15,39,64,.24)}
 .btn-search:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
 .search-btn-icon{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.13);font-size:1.1rem}
-@media(max-width:900px){.search-fields{grid-template-columns:1fr 42px 1fr}.btn-search{grid-column:1/-1;width:100%}}
-@media(max-width:620px){.search-panel .search-inner{padding:18px}.search-heading{align-items:flex-start}.search-badge{display:none}.search-fields{grid-template-columns:1fr}.swap-btn{margin:0 auto;transform:rotate(90deg)}.swap-btn:hover{transform:rotate(270deg)}}
+@media(max-width:900px){.search-fields{grid-template-columns:1fr 42px 1fr}.btn-search{grid-column:auto;width:100%;min-width:0}}
+@media(max-width:620px){.search-panel .search-inner{padding:18px}.search-heading{align-items:flex-start}.search-badge{display:none}.search-fields{grid-template-columns:1fr}.btn-search{grid-column:1;width:100%;min-width:0}.swap-btn{margin:0 auto;transform:rotate(90deg)}.swap-btn:hover{transform:rotate(270deg)}}
 
   .seo-intro{padding:38px 20px 24px;background:#fff;}
   .seo-content{max-width:980px;margin:0 auto;}
@@ -367,32 +367,82 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
   @media(max-width:900px){.seo-route-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
   @media(max-width:520px){.seo-route-grid{grid-template-columns:1fr;}}
 
-/* Easy professional destination picker */
-.search-fields{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr) auto}
-.route-picker{position:relative}
-.route-picker input{
- width:100%;height:58px;padding:0 50px 0 46px;border:1px solid #d7e2eb;border-radius:14px;
- background:#fff;color:var(--navy-deep);font:700 .92rem var(--font-body);
- box-shadow:0 3px 10px rgba(15,39,64,.045);transition:border-color .18s,box-shadow .18s
+/* Four-step horizontal bus search */
+.booking-steps{
+  display:grid !important;
+  grid-template-columns:minmax(170px,1fr) 44px minmax(170px,1fr) minmax(170px,1fr) minmax(190px,220px);
+  gap:10px;
+  align-items:stretch;
+  width:100%;
 }
-.route-picker input::placeholder{color:#8a9aaa;font-weight:600}
-.route-picker input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(25,118,210,.11)}
-.route-dot{position:absolute;z-index:3;left:17px;top:50%;transform:translateY(-50%);width:12px;height:12px;border:3px solid var(--blue);border-radius:50%;background:#fff;pointer-events:none}
-.to-dot{border-color:var(--sunset)}
-.picker-chevron{position:absolute;z-index:4;right:7px;top:7px;width:43px;height:44px;border:0;border-radius:10px;background:#f3f7fa;color:var(--navy-deep);font-size:1.1rem;font-weight:900;cursor:pointer}
-.picker-chevron:hover{background:#e8f1f8;color:var(--blue)}
-.route-suggestions{
- display:none;position:absolute;z-index:100;left:0;right:0;top:64px;max-height:290px;overflow:auto;
- padding:7px;background:#fff;border:1px solid #d8e3eb;border-radius:14px;box-shadow:0 18px 35px rgba(15,39,64,.15)
+.booking-step{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:10px 14px;
+  border:1px solid rgba(11,53,82,.14);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 7px 18px rgba(11,53,82,.08);
 }
-.route-suggestions.open{display:block}
-.route-suggestion{display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;border:0;border-radius:9px;background:#fff;text-align:left;cursor:pointer;color:var(--navy-deep)}
-.route-suggestion:hover{background:#eef6fc}
-.suggestion-pin{width:8px;height:8px;border:2px solid var(--blue);border-radius:50%;flex:none}
-.suggestion-name{font-weight:750;font-size:.86rem}
-.suggestion-hint{margin-left:auto;color:#8293a2;font-size:.68rem}
-@media(max-width:900px){.search-fields{grid-template-columns:1fr 42px 1fr}.btn-search{grid-column:1/-1;width:100%}}
-@media(max-width:620px){.search-fields{grid-template-columns:1fr}.swap-btn{margin:0 auto;transform:rotate(90deg)}}
+.booking-step .step-number{
+  flex:0 0 30px;
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--blue);
+  color:#fff;
+  font-size:.8rem;
+  font-weight:800;
+}
+.booking-step .step-content{min-width:0;flex:1}
+.booking-step label{
+  display:block;
+  margin-bottom:4px;
+  font-size:.68rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:var(--ink-soft);
+}
+.booking-step select,
+.booking-step input{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--ink);
+  font-size:.95rem;
+  font-weight:700;
+}
+.booking-step-btn{
+  min-height:76px !important;
+  width:100% !important;
+  min-width:0 !important;
+  border-radius:14px !important;
+  font-size:1rem !important;
+  font-weight:800 !important;
+}
+.booking-steps .swap-btn{
+  align-self:center;
+  width:44px;
+  height:44px;
+  margin:0;
+  border-radius:50%;
+}
+@media (max-width:900px){
+  .booking-steps{grid-template-columns:1fr 1fr}
+  .booking-steps .swap-btn{display:none}
+}
+@media (max-width:560px){
+  .booking-steps{grid-template-columns:1fr}
+  .booking-step-btn{min-height:58px !important}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://enacoachonlinebooking.com/#website","url":"https://enacoachonlinebooking.com/","name":"ENA Coach Online Booking Agent","description":"Book ENA Coach bus travel through an authorized booking agent. Check ENA Coach routes, fares and seat availability for Nairobi, Mombasa, Kisumu, Kisii, Kakamega and other Kenya routes.","inLanguage":"en-KE"},{"@type":"WebPage","@id":"https://enacoachonlinebooking.com/#webpage","url":"https://enacoachonlinebooking.com/","name":"ENA Coach Online Booking Agent | Bus Tickets, Routes & Fares Kenya","description":"Book ENA Coach bus travel through an authorized booking agent. Check ENA Coach routes, fares and seat availability for Nairobi, Mombasa, Kisumu, Kisii, Kakamega and other Kenya routes.","isPartOf":{"@id":"https://enacoachonlinebooking.com/#website"},"about":{"@type":"Thing","name":"ENA Coach bus booking"},"inLanguage":"en-KE"}]}</script>
 </head>
@@ -456,37 +506,37 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
         <div class="search-tab active" id="heroTabOneway" onclick="setHeroTripType('oneway')">One-way</div>
         <div class="search-tab" id="heroTabRound" onclick="setHeroTripType('roundtrip')">Round trip</div>
       </div>
-      <div class="search-fields oneway" id="heroSearchFields">
-        <div class="field route-select-field">
-          <label for="fromSelect">Leaving from</label>
-          <div class="route-picker">
-            <span class="route-dot from-dot" aria-hidden="true"></span>
-            <input id="fromSelect" type="text" autocomplete="off" placeholder="Choose departure town" aria-label="Departure town" role="combobox" aria-expanded="false">
-            <button class="picker-chevron" type="button" aria-label="Open departure towns">⌄</button>
-            <div class="route-suggestions" id="fromSuggestions" role="listbox"></div>
-          </div>
-        </div>
-        <button class="swap-btn" onclick="swapRoute()" aria-label="Swap departure and destination" type="button">⇄</button>
-        <div class="field route-select-field">
-          <label for="toSelect">Going to</label>
-          <div class="route-picker">
-            <span class="route-dot to-dot" aria-hidden="true"></span>
-            <input id="toSelect" type="text" autocomplete="off" placeholder="Choose destination" aria-label="Destination town" role="combobox" aria-expanded="false">
-            <button class="picker-chevron" type="button" aria-label="Open destination towns">⌄</button>
-            <div class="route-suggestions" id="toSuggestions" role="listbox"></div>
-          </div>
-        </div>
-        </div>
-        <div class="field">
-          <label for="travelDate">Travel date</label>
-          <input type="date" id="travelDate">
-        </div>
-        <div class="field return-field" id="heroReturnField" style="display:none;">
-          <label for="heroReturnDate">Return date</label>
-          <input type="date" id="heroReturnDate">
-        </div>
-        <button class="btn btn-search search-submit" id="searchBtn" onclick="searchRoute()" type="button"><span class="search-btn-icon" aria-hidden="true">⌕</span><span>Search Routes</span></button>
-      </div>
+      <div class="search-fields booking-steps" id="heroSearchFields">
+  <div class="booking-step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <label for="fromSelect">From</label>
+      <select id="fromSelect" onchange="onFromChange()"></select>
+    </div>
+  </div>
+
+  <button class="swap-btn" type="button" onclick="swapRoute()" aria-label="Swap departure and destination">⇄</button>
+
+  <div class="booking-step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <label for="toSelect">To</label>
+      <select id="toSelect" onchange="updateSearchButton()"></select>
+    </div>
+  </div>
+
+  <div class="booking-step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <label for="travelDate">Travel date</label>
+      <input type="date" id="travelDate">
+    </div>
+  </div>
+
+  <button class="btn btn-search booking-step-btn" id="searchBtn" type="button" onclick="searchRoute()">
+    <span>4. Search &amp; Book Bus</span>
+  </button>
+</div>
     </div>
     <div class="hero-spacer"></div>
   </div>
@@ -507,9 +557,7 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
     <p class="eyebrow">ENA Coach booking agent · Kenya bus travel</p>
     <h2 id="booking-heading">ENA Coach Online Booking, Routes &amp; Bus Fares</h2>
     <p>
-      Use this booking service to request an ENA Coach trip in Kenya. Select your departure and destination,
-      review the available route information, choose your preferred seat, and send your booking request to the
-      authorized booking agent for confirmation of availability and fare.
+      Use this booking service to request an ENA Coach trip in Kenya. Select any listed departure and destination, review the route information, choose your preferred seat, and send your booking request to the authorized booking agent for confirmation of availability, departure and fare.
     </p>
     <p>
       Popular ENA Coach travel routes include Nairobi to Mombasa, Nairobi to Kisumu, Nairobi to Kisii,
@@ -704,6 +752,36 @@ const ROUTES = [
   {id:'nrb-nn', from:'Nairobi', to:['Narok','Nakuru'], distance:'150–260 km', duration:'2.5–4 hrs', departures:['06:00','10:00','14:00','18:00'], regular:1000, vip:1500},
   {id:'mba-ksm-bs', from:'Mombasa', to:['Kisumu','Busia'], distance:'870–950 km', duration:'14–16 hrs', departures:['14:00'], regular:3200, vip:4000},
   {id:'pv-mba', from:'Port Victoria', to:['Mombasa'], distance:'~1000 km', duration:'16–18 hrs', departures:['12:00'], regular:3500, vip:4300},
+  {id:'network-nairobi-kericho', from:'Nairobi', to:['Kericho'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-bomet', from:'Nairobi', to:['Bomet'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-eldoret', from:'Nairobi', to:['Eldoret'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-kaimosi', from:'Nairobi', to:['Kaimosi'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-mumias', from:'Nairobi', to:['Mumias'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-webuye', from:'Nairobi', to:['Webuye'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-kitale', from:'Nairobi', to:['Kitale'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-kimilili', from:'Nairobi', to:['Kimilili'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-malaba', from:'Nairobi', to:['Malaba'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-bumala', from:'Nairobi', to:['Bumala'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-ugunja', from:'Nairobi', to:['Ugunja'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-maseno', from:'Nairobi', to:['Maseno'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-bondo', from:'Nairobi', to:['Bondo'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-usenge', from:'Nairobi', to:['Usenge'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-mbale', from:'Nairobi', to:['Mbale'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-kampala', from:'Nairobi', to:['Kampala'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-oyugis', from:'Nairobi', to:['Oyugis'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-keroka', from:'Nairobi', to:['Keroka'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-kendu-bay', from:'Nairobi', to:['Kendu Bay'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-rodi-kopany', from:'Nairobi', to:['Rodi Kopany'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+  {id:'network-nairobi-ndhiwa', from:'Nairobi', to:['Ndhiwa'], distance:'Route request', duration:'Confirm', departures:['Contact agent'], regular:null, vip:null},
+];
+
+
+const ALL_BOOKING_TOWNS = [
+  'Bomet','Bondo','Bumala','Bungoma','Busia','Eldoret','Homa Bay','Kaimosi',
+  'Kakamega','Kapsabet','Kendu Bay','Kericho','Keroka','Kisii','Kisumu',
+  'Kitale','Kimilili','Kampala','Malaba','Maseno','Mbale','Mbita','Migori',
+  'Mombasa','Mumias','Nairobi','Narok','Nakuru','Ndhiwa','Oyugis','Port Victoria',
+  'Rodi Kopany','Siaya','Ugunja','Usenge','Webuye'
 ];
 
 const RATES = { KES:1, USD:1/129, UGX:28.5, TZS:19.3 };
@@ -717,17 +795,30 @@ let heroTripType = 'oneway';
 
 /* ================= HELPERS ================= */
 function fmt(amountKES){
+  if(amountKES == null || Number.isNaN(amountKES)) return 'Confirm fare';
   const v = amountKES * RATES[currency];
   const rounded = currency==='UGX'||currency==='TZS' ? Math.round(v/10)*10 : Math.round(v);
   return SYMS[currency] + ' ' + rounded.toLocaleString();
 }
 function allTowns(){
-  const set = new Set(['Nairobi']);
+  const set = new Set(ALL_BOOKING_TOWNS);
   ROUTES.forEach(r=>{ set.add(r.from); r.to.forEach(t=>set.add(t)); });
   return Array.from(set);
 }
 function findRouteFor(from,to){
-  return ROUTES.find(r => (r.from===from && r.to.includes(to)) || (r.from===to && r.to.includes(from)));
+  const exact = ROUTES.find(r => (r.from===from && r.to.includes(to)) || (r.from===to && r.to.includes(from)));
+  if(exact) return exact;
+
+  // Any town pair listed in the booking directory can still be submitted
+  // as a booking request; the agent confirms the exact fare and departure.
+  if(ALL_BOOKING_TOWNS.includes(from) && ALL_BOOKING_TOWNS.includes(to) && from !== to){
+    return {
+      id:'request-' + from.toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-' + to.toLowerCase().replace(/[^a-z0-9]+/g,'-'),
+      from, to:[to], distance:'Route request', duration:'Confirm',
+      departures:['Contact agent'], regular:null, vip:null
+    };
+  }
+  return null;
 }
 function showToast(msg){
   const t = document.getElementById('toast');
@@ -773,74 +864,21 @@ function renderRoutesGrid(){
   `).join('');
 }
 
-
 function populateSelects(){
-  const towns=allTowns().sort((a,b)=>a.localeCompare(b));
-  setupTownPicker('fromSelect','fromSuggestions',towns);
-  setupTownPicker('toSelect','toSuggestions',towns);
-  document.getElementById('fromSelect').value='Nairobi';
-  document.getElementById('toSelect').value='Mombasa';
+  const towns = allTowns().sort((a,b)=>a.localeCompare(b));
+  const fromSel = document.getElementById('fromSelect');
+  const toSel = document.getElementById('toSelect');
+
+  const options = '<option value="">Select town</option>' +
+    towns.map(t=>`<option value="${t}">${t}</option>`).join('');
+
+  fromSel.innerHTML = options;
+  toSel.innerHTML = options;
+
+  fromSel.value = 'Nairobi';
+  toSel.value = 'Mombasa';
   updateSearchButton();
 }
-
-function setupTownPicker(inputId,listId,towns){
-  const input=document.getElementById(inputId);
-  const list=document.getElementById(listId);
-  const wrap=input.closest('.route-picker');
-  const toggle=wrap.querySelector('.picker-chevron');
-
-  function render(filter=''){
-    const q=filter.trim().toLowerCase();
-    const matches=towns.filter(t=>t.toLowerCase().includes(q)).slice(0,14);
-    list.innerHTML=matches.map(t=>`<button type="button" class="route-suggestion" data-town="${t}" role="option">
-      <span class="suggestion-pin"></span><span class="suggestion-name">${t}</span><span class="suggestion-hint">Choose</span>
-    </button>`).join('') || '<div style="padding:12px;color:#8293a2;font-size:.8rem">No matching town found</div>';
-    list.querySelectorAll('[data-town]').forEach(item=>{
-      item.addEventListener('click',()=>{
-        input.value=item.dataset.town;
-        close();
-        updateSearchButton();
-      });
-    });
-  }
-  function open(){
-    render(input.value);
-    list.classList.add('open');
-    input.setAttribute('aria-expanded','true');
-  }
-  function close(){
-    list.classList.remove('open');
-    input.setAttribute('aria-expanded','false');
-  }
-
-  input.addEventListener('focus',open);
-  input.addEventListener('input',()=>{render(input.value);open();updateSearchButton();});
-  toggle.addEventListener('click',()=>{input.focus();open();});
-  input.addEventListener('keydown',e=>{
-    if(e.key==='Escape') close();
-    if(e.key==='Enter'){
-      const first=list.querySelector('[data-town]');
-      if(first){e.preventDefault();input.value=first.dataset.town;close();updateSearchButton();}
-    }
-  });
-  document.addEventListener('click',e=>{if(!wrap.contains(e.target)) close();});
-}
-
-function updateSearchButton(){
-  const btn=document.getElementById('searchBtn');
-  const from=document.getElementById('fromSelect')?.value.trim();
-  const to=document.getElementById('toSelect')?.value.trim();
-  const valid=!!from&&!!to&&from!==to&&allTowns().includes(from)&&allTowns().includes(to);
-  if(btn){btn.disabled=!valid;btn.setAttribute('aria-disabled',String(!valid));}
-}
-
-function swapRoute(){
-  const from=document.getElementById('fromSelect');
-  const to=document.getElementById('toSelect');
-  const tmp=from.value;from.value=to.value;to.value=tmp;
-  updateSearchButton();
-}
-
 
 function onFromChange(){
   // Keep every route town available in both selectors.
@@ -1120,7 +1158,7 @@ function confirmStep4(){
 
 /* STEP 5 — confirm via WhatsApp (M-Pesa payment step removed) */
 function renderStep5(body,foot){
-  const total = booking.price * booking.seats.length * tripMultiplier();
+  const total = booking.price == null ? null : booking.price * booking.seats.length * tripMultiplier();
   body.innerHTML = `
     <div class="summary-row"><span>Trip type</span><strong>${booking.tripType==='roundtrip'?'Round trip':'One way'}</strong></div>
     <div class="summary-row"><span>Route</span><strong>${booking.route.from} → ${booking.destination}</strong></div>
@@ -1139,7 +1177,7 @@ function confirmViaWhatsApp(){
 
 /* STEP 6 — confirmation */
 function renderStep6(body,foot){
-  const total = booking.price * booking.seats.length * tripMultiplier();
+  const total = booking.price == null ? null : booking.price * booking.seats.length * tripMultiplier();
   const tripLabel = booking.tripType==='roundtrip' ? `Round trip (return ${booking.returnDate})` : 'One way';
   body.innerHTML = `
     <div class="confirm-wrap">
