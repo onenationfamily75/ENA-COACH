@@ -366,6 +366,33 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
   .seo-route-card span:last-child{font-size:.73rem;line-height:1.45;color:var(--ink-soft);}
   @media(max-width:900px){.seo-route-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
   @media(max-width:520px){.seo-route-grid{grid-template-columns:1fr;}}
+
+/* Easy professional destination picker */
+.search-fields{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr) auto}
+.route-picker{position:relative}
+.route-picker input{
+ width:100%;height:58px;padding:0 50px 0 46px;border:1px solid #d7e2eb;border-radius:14px;
+ background:#fff;color:var(--navy-deep);font:700 .92rem var(--font-body);
+ box-shadow:0 3px 10px rgba(15,39,64,.045);transition:border-color .18s,box-shadow .18s
+}
+.route-picker input::placeholder{color:#8a9aaa;font-weight:600}
+.route-picker input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(25,118,210,.11)}
+.route-dot{position:absolute;z-index:3;left:17px;top:50%;transform:translateY(-50%);width:12px;height:12px;border:3px solid var(--blue);border-radius:50%;background:#fff;pointer-events:none}
+.to-dot{border-color:var(--sunset)}
+.picker-chevron{position:absolute;z-index:4;right:7px;top:7px;width:43px;height:44px;border:0;border-radius:10px;background:#f3f7fa;color:var(--navy-deep);font-size:1.1rem;font-weight:900;cursor:pointer}
+.picker-chevron:hover{background:#e8f1f8;color:var(--blue)}
+.route-suggestions{
+ display:none;position:absolute;z-index:100;left:0;right:0;top:64px;max-height:290px;overflow:auto;
+ padding:7px;background:#fff;border:1px solid #d8e3eb;border-radius:14px;box-shadow:0 18px 35px rgba(15,39,64,.15)
+}
+.route-suggestions.open{display:block}
+.route-suggestion{display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;border:0;border-radius:9px;background:#fff;text-align:left;cursor:pointer;color:var(--navy-deep)}
+.route-suggestion:hover{background:#eef6fc}
+.suggestion-pin{width:8px;height:8px;border:2px solid var(--blue);border-radius:50%;flex:none}
+.suggestion-name{font-weight:750;font-size:.86rem}
+.suggestion-hint{margin-left:auto;color:#8293a2;font-size:.68rem}
+@media(max-width:900px){.search-fields{grid-template-columns:1fr 42px 1fr}.btn-search{grid-column:1/-1;width:100%}}
+@media(max-width:620px){.search-fields{grid-template-columns:1fr}.swap-btn{margin:0 auto;transform:rotate(90deg)}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://enacoachonlinebooking.com/#website","url":"https://enacoachonlinebooking.com/","name":"ENA Coach Online Booking Agent","description":"Book ENA Coach bus travel through an authorized booking agent. Check ENA Coach routes, fares and seat availability for Nairobi, Mombasa, Kisumu, Kisii, Kakamega and other Kenya routes.","inLanguage":"en-KE"},{"@type":"WebPage","@id":"https://enacoachonlinebooking.com/#webpage","url":"https://enacoachonlinebooking.com/","name":"ENA Coach Online Booking Agent | Bus Tickets, Routes & Fares Kenya","description":"Book ENA Coach bus travel through an authorized booking agent. Check ENA Coach routes, fares and seat availability for Nairobi, Mombasa, Kisumu, Kisii, Kakamega and other Kenya routes.","isPartOf":{"@id":"https://enacoachonlinebooking.com/#website"},"about":{"@type":"Thing","name":"ENA Coach bus booking"},"inLanguage":"en-KE"}]}</script>
 </head>
@@ -431,19 +458,24 @@ footer{background:var(--navy-deep);color:#c9dbe8;padding:56px 0 24px;}
       </div>
       <div class="search-fields oneway" id="heroSearchFields">
         <div class="field route-select-field">
-          <label for="fromSelect">From</label>
-          <div class="route-select-wrap">
-            <span class="route-pin" aria-hidden="true">●</span>
-            <select id="fromSelect" onchange="onFromChange()" aria-label="Departure town"></select>
+          <label for="fromSelect">Leaving from</label>
+          <div class="route-picker">
+            <span class="route-dot from-dot" aria-hidden="true"></span>
+            <input id="fromSelect" type="text" autocomplete="off" placeholder="Choose departure town" aria-label="Departure town" role="combobox" aria-expanded="false">
+            <button class="picker-chevron" type="button" aria-label="Open departure towns">⌄</button>
+            <div class="route-suggestions" id="fromSuggestions" role="listbox"></div>
           </div>
         </div>
         <button class="swap-btn" onclick="swapRoute()" aria-label="Swap departure and destination" type="button">⇄</button>
         <div class="field route-select-field">
-          <label for="toSelect">To</label>
-          <div class="route-select-wrap">
-            <span class="route-pin destination" aria-hidden="true">●</span>
-            <select id="toSelect" aria-label="Destination town"></select>
+          <label for="toSelect">Going to</label>
+          <div class="route-picker">
+            <span class="route-dot to-dot" aria-hidden="true"></span>
+            <input id="toSelect" type="text" autocomplete="off" placeholder="Choose destination" aria-label="Destination town" role="combobox" aria-expanded="false">
+            <button class="picker-chevron" type="button" aria-label="Open destination towns">⌄</button>
+            <div class="route-suggestions" id="toSuggestions" role="listbox"></div>
           </div>
+        </div>
         </div>
         <div class="field">
           <label for="travelDate">Travel date</label>
@@ -741,21 +773,74 @@ function renderRoutesGrid(){
   `).join('');
 }
 
+
 function populateSelects(){
-  const towns = allTowns().sort((a,b)=>a.localeCompare(b));
-  const fromSel = document.getElementById('fromSelect');
-  const toSel = document.getElementById('toSelect');
-
-  const options = '<option value="">Select town</option>' +
-    towns.map(t=>`<option value="${t}">${t}</option>`).join('');
-
-  fromSel.innerHTML = options;
-  toSel.innerHTML = options;
-
-  fromSel.value = 'Nairobi';
-  toSel.value = 'Mombasa';
+  const towns=allTowns().sort((a,b)=>a.localeCompare(b));
+  setupTownPicker('fromSelect','fromSuggestions',towns);
+  setupTownPicker('toSelect','toSuggestions',towns);
+  document.getElementById('fromSelect').value='Nairobi';
+  document.getElementById('toSelect').value='Mombasa';
   updateSearchButton();
 }
+
+function setupTownPicker(inputId,listId,towns){
+  const input=document.getElementById(inputId);
+  const list=document.getElementById(listId);
+  const wrap=input.closest('.route-picker');
+  const toggle=wrap.querySelector('.picker-chevron');
+
+  function render(filter=''){
+    const q=filter.trim().toLowerCase();
+    const matches=towns.filter(t=>t.toLowerCase().includes(q)).slice(0,14);
+    list.innerHTML=matches.map(t=>`<button type="button" class="route-suggestion" data-town="${t}" role="option">
+      <span class="suggestion-pin"></span><span class="suggestion-name">${t}</span><span class="suggestion-hint">Choose</span>
+    </button>`).join('') || '<div style="padding:12px;color:#8293a2;font-size:.8rem">No matching town found</div>';
+    list.querySelectorAll('[data-town]').forEach(item=>{
+      item.addEventListener('click',()=>{
+        input.value=item.dataset.town;
+        close();
+        updateSearchButton();
+      });
+    });
+  }
+  function open(){
+    render(input.value);
+    list.classList.add('open');
+    input.setAttribute('aria-expanded','true');
+  }
+  function close(){
+    list.classList.remove('open');
+    input.setAttribute('aria-expanded','false');
+  }
+
+  input.addEventListener('focus',open);
+  input.addEventListener('input',()=>{render(input.value);open();updateSearchButton();});
+  toggle.addEventListener('click',()=>{input.focus();open();});
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Escape') close();
+    if(e.key==='Enter'){
+      const first=list.querySelector('[data-town]');
+      if(first){e.preventDefault();input.value=first.dataset.town;close();updateSearchButton();}
+    }
+  });
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target)) close();});
+}
+
+function updateSearchButton(){
+  const btn=document.getElementById('searchBtn');
+  const from=document.getElementById('fromSelect')?.value.trim();
+  const to=document.getElementById('toSelect')?.value.trim();
+  const valid=!!from&&!!to&&from!==to&&allTowns().includes(from)&&allTowns().includes(to);
+  if(btn){btn.disabled=!valid;btn.setAttribute('aria-disabled',String(!valid));}
+}
+
+function swapRoute(){
+  const from=document.getElementById('fromSelect');
+  const to=document.getElementById('toSelect');
+  const tmp=from.value;from.value=to.value;to.value=tmp;
+  updateSearchButton();
+}
+
 
 function onFromChange(){
   // Keep every route town available in both selectors.
