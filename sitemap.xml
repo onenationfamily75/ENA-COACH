@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://enacoachonlinebooking.com/</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://enacoachonlinebooking.com/</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-mombasa.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-kisumu.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-kisii.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-kakamega.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-bungoma.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-busia.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-homa-bay.html</loc></url>
+  <url><loc>https://enacoachonlinebooking.com/routes/nairobi-to-kapsabet.html</loc></url>
 </urlset>
